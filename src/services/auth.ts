@@ -1,11 +1,6 @@
 import Bcrypt from 'bcrypt'
 import Jwt from 'jsonwebtoken'
 
-type TokenPayload = {
-    _id: string,
-    email: string,
-}
-
 export const validatePassword = async (password: string, hash: string): Promise<boolean> => {
     return await Bcrypt.compare(password, hash)
 }

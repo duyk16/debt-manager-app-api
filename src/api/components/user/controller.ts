@@ -21,7 +21,7 @@ export const getAllUsers: Controller = async (req, res, next) => {
 export const getUserById: Controller = async (req, res, next) => {
     try {
         const { id } = req.query
-        const user = await UserModel.findById(id)
+        const user = await UserModel.findById(id).select("-__v -password")
 
         if (!user) {
             return res.status(400).json({
@@ -53,7 +53,7 @@ export const createUser: Controller = async (req, res, next) => {
     } catch (error) {
         if (error instanceof MongoError) {
             if (error.code === 5000) {
-                error = new ResError(400, 4001, "Email was register before")
+                error = new ResError(400, 40001, "Email was register before")
                 next(error)
                 return
             }
@@ -79,7 +79,7 @@ export const updateUser: Controller = async (req, res, next) => {
             { new: true },
         )
 
-        if (!user) throw new ResError(400, 4002, "Not found user id")
+        if (!user) throw new ResError(400, 40002, "Not found user id")
 
         res.status(200).json({
             status: 'ok',
@@ -95,10 +95,10 @@ export const createLogin: Controller = async (req, res, next) => {
     try {
         const { email, password } = req.body
         let user = await UserModel.findOne({ email })
-        if (!user) throw new ResError(400, 4003, "Email is not exist")
+        if (!user) throw new ResError(400, 40003, "Email is not exist")
 
         let match = validatePassword(password, user.password)
-        if (!match) throw new ResError(400, 4004, "Password is not match")
+        if (!match) throw new ResError(400, 40004, "Password is not match")
 
         let token = generateToken({ _id: user._id, email: user.email })
         res.status(200).json({

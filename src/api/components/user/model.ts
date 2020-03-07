@@ -1,5 +1,5 @@
 
-import { prop, getModelForClass, post, pre } from '@typegoose/typegoose';
+import { prop, getModelForClass, pre } from '@typegoose/typegoose';
 import Bcrypt from 'bcrypt'
 
 @pre<User>('save', async function (next) {
@@ -8,21 +8,27 @@ import Bcrypt from 'bcrypt'
 })
 export class User {
     @prop({ required: true })
-    public userName!: string;
+    public userName!: string
 
     @prop({ required: true, unique: true })
-    public email!: string;
+    public email!: string
 
     @prop({ required: true })
-    public password!: string;
+    public password!: string
+
+    @prop({ default: 0 })
+    public totalDebt!: number
+
+    @prop({ default: 0 })
+    public totalCredit!: number
 
     @prop({ default: 0 })
     public remindTime!: number;
 
-    @prop({})
+    @prop({ default: new Date() })
     public createdAt!: Date
 
-    @prop({})
+    @prop({ default: new Date() })
     public updatedAt!: Date
 }
 
