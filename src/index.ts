@@ -1,6 +1,7 @@
 import Debug from 'debug'
 import Http from 'http'
 import Dotenv from 'dotenv'
+import Mongoose from 'mongoose'
 import { AddressInfo } from 'net'
 
 import app from './api/server'
@@ -77,5 +78,18 @@ function onListening() {
     const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port
     debug('Listening on ' + bind)
 }
+
+/**
+ * Connect to Database
+ */
+
+Mongoose.connect(
+    process.env.MONGO_URL || 'mongodb://localhost:27017/test',
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    (err) => {
+        if (err) return Log.server('Connect fail')
+        return Log.server('Connected to MongoDB')
+    }
+)
 
 export default server

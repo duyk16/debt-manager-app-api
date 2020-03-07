@@ -9,6 +9,7 @@ export const errorHandle = (err: Error | ResError, req: Request, res: Response, 
     if (err instanceof ResError) {
         res.status(err.status).json({
             status: 'error',
+            code: err.code,
             message: err.message,
         })
         return
@@ -18,6 +19,7 @@ export const errorHandle = (err: Error | ResError, req: Request, res: Response, 
     let message = process.env.NODE_ENV === "development" ? err.message : "Something failed."
     res.status(500).json({
         status: 'error',
+        code: 5000,
         message: message,
     })
     return

@@ -8,7 +8,7 @@ import Bcrypt from 'bcrypt'
 })
 export class User {
     @prop({ required: true })
-    public fullName!: string;
+    public userName!: string;
 
     @prop({ required: true, unique: true })
     public email!: string;

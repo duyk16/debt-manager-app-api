@@ -5,9 +5,11 @@ export type Controller = (req: Request, res: Response, next: NextFunction) => vo
 export class ResError {
     public status: number
     public message: string
+    public code: number
 
-    constructor(status: number, message: string) {
+    constructor(status: number, code: number, message: string) {
         this.status = status
-        this.message= message
+        this.code = code
+        this.message = message
     }
 }
