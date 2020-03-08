@@ -17,7 +17,6 @@ app.use(BodyParser.urlencoded({ extended: false }))
 app.use(authenticate)
 
 app.use('/v1', rootRouter)
-app.get('/test', (req, res) => { res.json({ status: 'ok' }) })
 
 // Exception handle
 app.use(errorHandle)

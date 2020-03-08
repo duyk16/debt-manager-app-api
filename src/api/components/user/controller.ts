@@ -3,11 +3,11 @@ import { MongoError } from 'mongodb'
 import { UserModel } from "./model";
 
 import { Controller, ResError } from "../../../type/general";
-import { validatePassword, generateToken } from '../../../services/auth';
+import { validatePassword, generateToken } from '../../../helper/auth';
 
 export const getAllUsers: Controller = async (req, res, next) => {
     try {
-        const users = await UserModel.find({})
+        const users = await UserModel.find({}).select('-__v -password').lean()
         res.status(200).json({
             status: 'ok',
             data: users
@@ -21,7 +21,7 @@ export const getAllUsers: Controller = async (req, res, next) => {
 export const getUserById: Controller = async (req, res, next) => {
     try {
         const { id } = req.query
-        const user = await UserModel.findById(id).select("-__v -password")
+        const user = await UserModel.findById(id).select('-__v -password').lean()
 
         if (!user) {
             return res.status(400).json({
@@ -77,7 +77,7 @@ export const updateUser: Controller = async (req, res, next) => {
             id,
             updateQuery,
             { new: true },
-        )
+        ).select('-__v -password').lean()
 
         if (!user) throw new ResError(400, 40002, "Not found user id")
 
@@ -94,7 +94,7 @@ export const updateUser: Controller = async (req, res, next) => {
 export const createLogin: Controller = async (req, res, next) => {
     try {
         const { email, password } = req.body
-        let user = await UserModel.findOne({ email })
+        let user = await UserModel.findOne({ email }).select('-__v -password').lean()
         if (!user) throw new ResError(400, 40003, "Email is not exist")
 
         let match = validatePassword(password, user.password)
@@ -103,7 +103,10 @@ export const createLogin: Controller = async (req, res, next) => {
         let token = generateToken({ _id: user._id, email: user.email })
         res.status(200).json({
             status: 'ok',
-            data: token,
+            data: {
+                ...user,
+                token
+            },
         })
 
     } catch (error) {

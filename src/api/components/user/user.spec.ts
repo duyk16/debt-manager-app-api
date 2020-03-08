@@ -1,16 +1,17 @@
 import request from 'supertest'
 
 import { UserModel, User } from './model'
-import server from '../../server'
+import server from '../../../index'
 
 describe('User', () => {
-    // beforeEach(async () => {
-    //     let user = new UserModel({ name: "Duy Nguyen" } as User)
-    //     await user.save()
-    // })
+    beforeEach(async () => {
+        // let user = new UserModel({ name: "Duy Nguyen" } as User)
+        // await user.save()
+    })
 
     afterEach(async () => {
         await UserModel.deleteMany({})
+        server.close()
     })
 
     // describe('/GET ', () => {

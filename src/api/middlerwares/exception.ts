@@ -1,6 +1,6 @@
 import { Response, NextFunction, Request } from "express"
 
-import logger from "../../services/logger"
+import logger from "../../helper/logger"
 import { ResError } from "../../type/general"
 
 export const errorHandle = (err: Error | ResError, req: Request, res: Response, next: NextFunction) => {

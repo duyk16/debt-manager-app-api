@@ -14,6 +14,8 @@ export const getAllTransactions: Controller = async (req, res, next) => {
             .sort({ createdAt: -1 })
             .skip((page - 1) * limit)
             .limit(limit)
+            .select('-__v')
+            .lean()
 
         res.status(200).json({
             status: 'ok',

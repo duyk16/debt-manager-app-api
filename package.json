@@ -13,13 +13,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/duyk16/debt-manager-app.git"
+    "url": "git+https://github.com/duyk16/debt-manager-app-api.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/duyk16/debt-manager-app/issues"
+    "url": "https://github.com/duyk16/debt-manager-app-api/issues"
   },
   "dependencies": {
     "@typegoose/typegoose": "^6.2.1",

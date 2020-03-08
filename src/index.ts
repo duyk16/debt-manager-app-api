@@ -6,7 +6,7 @@ import { AddressInfo } from 'net'
 
 import app from './api/server'
 import './global'
-import './services/logger'
+import './helper/logger'
 
 const debug = Debug('dev:server');
 
@@ -85,7 +85,7 @@ function onListening() {
 
 Mongoose.connect(
     process.env.MONGO_URL || 'mongodb://localhost:27017/test',
-    { useNewUrlParser: true, useUnifiedTopology: true },
+    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
     (err) => {
         if (err) return Log.server('Connect fail')
         return Log.server('Connected to MongoDB')

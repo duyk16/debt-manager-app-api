@@ -1,5 +1,3 @@
-import { UpdateQuery } from "mongodb"
-
 import { Controller, ResError } from "../../../type/general";
 
 import { PaymentModel } from "./model";
@@ -18,6 +16,8 @@ export const getAllPayments: Controller = async (req, res, next) => {
             .sort({ createdAt: -1 })
             .skip((page - 1) * limit)
             .limit(limit)
+            .select('-__v')
+            .lean()
 
         res.status(200).json({
             status: 'ok',

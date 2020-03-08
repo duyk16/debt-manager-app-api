@@ -1,5 +1,5 @@
 import { Controller, ResError } from "../../type/general";
-import { validateToken } from "../../services/auth";
+import { validateToken } from "../../helper/auth";
 import { Request } from "express";
 
 let ignoreAuthRouters = [
@@ -28,7 +28,7 @@ export const authenticate: Controller = async (req, res, next) => {
     next()
 }
 
-export const isIgnoreRouter = async (req: Request) => {
+export const isIgnoreRouter = (req: Request): boolean => {
     for (let route of ignoreAuthRouters) {
         if (route.url === req.url && route.method === req.method) {
             return true
