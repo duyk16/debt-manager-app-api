@@ -31,7 +31,9 @@
     "express-validator": "^6.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.8.9",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "nodemailer": "^6.4.4",
+    "redis": "^3.0.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
@@ -44,6 +46,8 @@
     "@types/mongoose": "^5.5.41",
     "@types/morgan": "^1.7.37",
     "@types/node": "^13.1.8",
+    "@types/nodemailer": "^6.4.0",
+    "@types/redis": "^2.8.16",
     "@types/supertest": "^2.0.8",
     "jest": "^25.1.0",
     "nodemon": "^2.0.2",

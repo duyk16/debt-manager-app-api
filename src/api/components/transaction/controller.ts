@@ -1,6 +1,7 @@
 import { TransactionModel } from "./model";
 import { Controller, ResError } from "../../../type/general";
 import { UserModel } from "../user/model";
+import Reminder from "../../../services/reminder";
 
 export const getAllTransactions: Controller = async (req, res, next) => {
     try {
@@ -45,6 +46,16 @@ export const createTransaction: Controller = async (req, res, next) => {
         })
 
         await transaction.save()
+
+        new Reminder(
+            transaction._id,
+            {
+                to: debtUser.email,
+                subject: 'Reminder',
+                text: `You need to paid ${transaction.value} to ${req.user.userName}`,
+                date: transaction.createdAt.getTime() + (2 * 60 * 60 * 1000) // 2 hours
+            }
+        )
 
         res.status(201).json({
             status: 'ok',

@@ -5,8 +5,10 @@ import Mongoose from 'mongoose'
 import { AddressInfo } from 'net'
 
 import app from './api/server'
+import Email from './services/email'
 import './global'
 import './helper/logger'
+import Reminder from './services/reminder'
 
 const debug = Debug('dev:server');
 
@@ -19,6 +21,16 @@ if (config.error) {
     console.log('Load environment variable from .env file was failed.')
     process.exit(1)
 }
+
+/**
+ * Start email service
+ */
+Email.start()
+
+/**
+ * Start reminder service
+ */
+Reminder.init()
 
 /**
  * Get port from environment and store in Express.
@@ -87,7 +99,10 @@ Mongoose.connect(
     process.env.MONGO_URL || 'mongodb://localhost:27017/test',
     { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
     (err) => {
-        if (err) return Log.server('Connect fail')
+        if (err) {
+            Log.server('Connect to MongoDB fail')
+            process.exit(1)
+        }
         return Log.server('Connected to MongoDB')
     }
 )

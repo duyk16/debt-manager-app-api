@@ -1,6 +1,6 @@
 import { MongoError } from 'mongodb'
 
-import { UserModel } from "./model";
+import { UserModel, User } from "./model";
 
 import { Controller, ResError } from "../../../type/general";
 import { validatePassword, generateToken } from '../../../helper/auth';
@@ -100,7 +100,7 @@ export const createLogin: Controller = async (req, res, next) => {
         let match = validatePassword(password, user.password)
         if (!match) throw new ResError(400, 40004, "Password is not match")
 
-        let token = generateToken({ _id: user._id, email: user.email })
+        let token = generateToken({ _id: user._id, email: user.email, userName: user.userName })
         res.status(200).json({
             status: 'ok',
             data: {

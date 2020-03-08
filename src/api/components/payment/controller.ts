@@ -3,6 +3,7 @@ import { Controller, ResError } from "../../../type/general";
 import { PaymentModel } from "./model";
 import { TransactionModel } from "../transaction/model";
 import { UserModel } from "../user/model";
+import Reminder from "../../../services/reminder";
 
 export const getAllPayments: Controller = async (req, res, next) => {
     try {
@@ -40,10 +41,14 @@ export const createPayment: Controller = async (req, res, next) => {
 
         let payment = new PaymentModel({ transaction })
 
+        // Cancel reminder
+        Reminder.cancelJob(transaction._id)
+
+        // Save to db
         await Promise.all([
             payment.save(),
-            UserModel.findByIdAndUpdate(transaction.creditor, { $inc: { totalCredit: -transaction.value}}),
-            UserModel.findByIdAndUpdate(transaction.debtor, { $inc: { totalDebt: -transaction.value}})
+            UserModel.findByIdAndUpdate(transaction.creditor, { $inc: { totalCredit: -transaction.value } }),
+            UserModel.findByIdAndUpdate(transaction.debtor, { $inc: { totalDebt: -transaction.value } })
         ])
 
         res.status(201).json({

@@ -8,6 +8,7 @@ declare namespace Log {
 declare type TokenPayload = {
     _id: string,
     email: string,
+    userName: string,
 }
 
 declare namespace Express {

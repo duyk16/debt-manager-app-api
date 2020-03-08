@@ -17,6 +17,9 @@ export class Transaction {
     public isPaid!: boolean
 
     @prop({ default: new Date() })
+    public lastRemind!: Date
+
+    @prop({ default: new Date() })
     public createdAt!: Date
 }
 
