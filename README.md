@@ -40,5 +40,5 @@ JWT_KEY=123456
 |-|-|-|-|-|-|
 |Method|URL|Query|Params|Body|Description|
 |GET|/users| | | | Get all users|
-|POST|/users| | |{email: "abc@gmail.com", password: "12345"} | Get all users|
-|POST|/users/auth| | |{email: "abc@gmail.com", password: "12345"} | Get all users|
+|POST|/users| | |{email: "abc@gmail.com", password: "12345"} | Create an user|
+|POST|/users/auth| | |{email: "abc@gmail.com", password: "12345"} | Login|
